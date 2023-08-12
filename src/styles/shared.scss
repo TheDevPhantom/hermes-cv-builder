@@ -1,0 +1,11 @@
+@import 'variables';
+
+.form-row {
+  display: flex;
+  gap: $padding;
+  width: 100%;
+
+  > * {
+    flex: 1;
+  }
+}

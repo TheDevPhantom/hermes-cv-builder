@@ -1,0 +1,49 @@
+@import '../../styles/variables';
+
+.input-container {
+  label {
+    font-weight: 600;
+    font-size: 0.8rem;
+    margin-left: 0.5rem;
+  }
+
+  .input {
+    background-color: $color-foreground;
+    border: $border;
+    border-radius: $border-radius;
+    padding: calc($padding * 0.75);
+    width: 100%;
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  > div {
+    position: relative;
+
+    .eye {
+      position: absolute;
+      cursor: pointer;
+      height: 100%;
+      top: 0;
+      right: 0;
+      aspect-ratio: 1/1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      > * {
+        transition: all 0.2s ease-in-out;
+      }
+
+      &:hover {
+        > * {
+          color: $color-primary;
+          scale: 1.2;
+        }
+      }
+    }
+  }
+}
