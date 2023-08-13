@@ -1,5 +1,6 @@
 import Input from '../../components/Input/Input';
 import useStore from '../../store/store';
+import './_styles.profile.scss';
 
 const Profile = () => {
   const { profileDetails, setProfileDetails } = useStore();
@@ -10,7 +11,7 @@ const Profile = () => {
   };
 
   return (
-    <div>
+    <div className='profile-screen'>
       <div className='form-row'>
         <Input
           label='First Name'
@@ -50,6 +51,7 @@ const Profile = () => {
         name='bio'
         onChange={onChange}
         value={profileDetails.bio}
+        rows={10}
       />
     </div>
   );

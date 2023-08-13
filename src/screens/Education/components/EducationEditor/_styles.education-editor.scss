@@ -1,0 +1,15 @@
+@import '../../../../styles/variables';
+@import '../../../../styles/mixins';
+
+.education-editor {
+  @include screen;
+
+  display: flex;
+  flex-direction: column;
+  gap: $padding;
+  background-color: $color-foreground;
+  padding: $padding;
+  border: $border;
+  border-radius: $border-radius;
+  overflow: auto;
+}

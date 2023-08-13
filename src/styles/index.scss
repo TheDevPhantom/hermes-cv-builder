@@ -17,7 +17,7 @@
 }
 
 body {
-  // background-color: #ffffff60;
+  background-color: $color-background;
 }
 
 * {
@@ -44,118 +44,15 @@ button {
 .body {
   display: flex;
   width: 100vw;
-  min-height: 100vh;
+  height: 100vh;
   padding: 0.5rem;
   padding-top: $header-height;
 
   .content {
-    background-color: $color-foreground;
-    border-radius: $border-radius;
-    padding: 1em;
     flex: 1;
-    border: $border;
     margin-left: 0.5rem;
-  }
-}
-
-.tip {
-  position: relative;
-
-  &.large {
-    > span {
-      padding: $padding;
-      border-radius: $border-radius;
-      font-size: 0.7rem;
-    }
-  }
-
-  > span {
-    background-color: rgb(17, 17, 17);
-    color: white;
-    padding: calc($padding / 2);
-    border-radius: calc($border-radius / 2);
-    position: absolute;
-    bottom: 110%;
-    left: 50%;
-    transform: translateX(-50%);
-    display: none;
-    transition: all 0.2s ease-in-out;
-    z-index: 100;
-    width: max-content;
-    font-size: 0.6rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    line-height: 0.8rem;
-    text-align: center;
-    box-sizing: border-box;
-    pointer-events: none;
-
-    &.left {
-      right: 100%;
-      top: 50%;
-      bottom: auto;
-      left: auto;
-      transform: translate(0, -50%);
-
-      &::before {
-        // arrow on the right
-        left: auto;
-        right: -7.5px;
-        top: 50%;
-        transform: translate(0, -50%) rotate(-90deg);
-      }
-    }
-
-    &.right {
-      left: 100%;
-      top: 50%;
-      bottom: auto;
-      right: auto;
-      transform: translate(0, -50%);
-
-      &::before {
-        // arrow on the left
-        left: -7.5px;
-        right: auto;
-        top: 50%;
-        transform: translate(0, -50%) rotate(90deg);
-      }
-    }
-
-    &.bottom {
-      top: 100%;
-      left: 50%;
-      right: auto;
-      bottom: auto;
-      transform: translateX(-50%);
-
-      &::before {
-        // arrow on the top
-        left: 50%;
-        right: auto;
-        top: -5px;
-        transform: translateX(-50%) rotate(180deg);
-      }
-    }
-
-    &::before {
-      content: '';
-      position: absolute;
-      bottom: -5px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 0;
-      height: 0;
-      border-left: 5px solid transparent;
-      border-right: 5px solid transparent;
-      border-top: 5px solid rgb(17, 17, 17);
-    }
-  }
-
-  &:hover {
-    > span {
-      display: flex;
-      animation: fade-in 0.2s ease-in-out;
-    }
+    overflow: hidden;
+    display: flex;
+    max-height: 100%;
   }
 }

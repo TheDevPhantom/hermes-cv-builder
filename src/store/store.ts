@@ -1,31 +1,18 @@
 import { create } from 'zustand';
+import createProfileSlice, { IProfileSlice } from './slices/profileSlice';
+import createExperienceSlice, {
+  IExperienceSlice
+} from './slices/experienceSlice';
+import createEducationSlice, { IEducationSlice } from './slices/educationSlice';
+import createProjectSlice, { IProjectSlice } from './slices/projectSlice';
 
-interface IProfileDetails {
-  firstName: string;
-  lastName: string;
-  email: string;
-  contactNumber: string;
-  bio: string;
-}
-
-type Store = {
-  profileDetails: IProfileDetails;
-  setProfileDetails: (profileDetails: Partial<IProfileDetails>) => void;
-};
-
-const useStore = create<Store>()((set) => ({
-  profileDetails: {
-    firstName: '',
-    lastName: '',
-    email: '',
-    contactNumber: '',
-    bio: ''
-  },
-  setProfileDetails: (profileDetails) =>
-    set((state) => ({
-      ...state,
-      profileDetails: { ...state.profileDetails, ...profileDetails }
-    }))
+const useStore = create<
+  IProfileSlice & IExperienceSlice & IEducationSlice & IProjectSlice
+>()((...a) => ({
+  ...createProfileSlice(...a),
+  ...createExperienceSlice(...a),
+  ...createEducationSlice(...a),
+  ...createProjectSlice(...a)
 }));
 
 export default useStore;

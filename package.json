@@ -10,16 +10,20 @@
   },
   "dependencies": {
     "@types/react-beautiful-dnd": "^13.1.4",
+    "electron-store": "^8.1.0",
+    "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.2.0",
     "react-icons": "^4.10.1",
     "sass": "^1.64.2",
+    "uuid": "^9.0.0",
     "zustand": "^4.4.1"
   },
   "devDependencies": {
     "@types/react": "^18.0.37",
     "@types/react-dom": "^18.0.11",
+    "@types/uuid": "^9.0.2",
     "@typescript-eslint/eslint-plugin": "^5.59.0",
     "@typescript-eslint/parser": "^5.59.0",
     "@vitejs/plugin-react": "^4.0.0",

@@ -1,0 +1,5 @@
+@import 'animations';
+
+@mixin screen {
+  animation: fade-in-left 0.2s ease-in-out;
+}

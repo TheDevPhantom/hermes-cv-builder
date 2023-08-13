@@ -1,0 +1,36 @@
+@import '../../../../styles/variables';
+@import '../../../../styles/mixins';
+
+.experience-editor {
+  @include screen;
+
+  display: flex;
+  flex-direction: column;
+  gap: $padding;
+  background-color: $color-foreground;
+  padding: $padding;
+  border: $border;
+  border-radius: $border-radius;
+  overflow: auto;
+
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: $padding;
+    border: $border;
+    border-radius: $border-radius;
+    padding: $padding;
+    background-color: $color-background;
+
+    .section-header {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: $padding;
+
+      p {
+        opacity: 0.6;
+        font-size: 0.9rem;
+      }
+    }
+  }
+}

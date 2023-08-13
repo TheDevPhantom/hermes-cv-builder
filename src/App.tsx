@@ -15,9 +15,7 @@ function App() {
           activeTab={activeTab}
           tabs={Tabs}
         />
-        <div className='content'>
-          <div className='screen'>{activeTab.screen}</div>
-        </div>
+        <div className='content'>{activeTab.screen}</div>
       </div>
     </>
   );
