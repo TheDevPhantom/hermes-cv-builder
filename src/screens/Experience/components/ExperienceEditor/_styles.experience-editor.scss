@@ -33,4 +33,44 @@
       }
     }
   }
+
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    gap: $padding;
+    border: $border;
+    border-radius: $border-radius;
+    padding: $padding;
+    background-color: $color-background;
+
+    .project-card-header {
+      display: flex;
+      flex-direction: column;
+
+      p {
+        opacity: 0.6;
+        font-size: 0.9rem;
+      }
+    }
+
+    .project-card-body {
+      display: flex;
+      flex-direction: column;
+
+      p {
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+  .delete {
+    padding: $padding;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: rgb(214, 6, 6);
+    cursor: pointer;
+  }
 }

@@ -1,3 +1,5 @@
+import { contextBridge, ipcRenderer } from 'electron';
+
 function domReady(
   condition: DocumentReadyState[] = ['complete', 'interactive']
 ) {
@@ -92,3 +94,9 @@ window.onmessage = (ev) => {
 };
 
 setTimeout(removeLoading, 4999);
+
+contextBridge.exposeInMainWorld('ipcRenderer', {
+  send: (channel: string, data: any) => ipcRenderer.send(channel, data),
+  on: (channel: string, func: any) =>
+    ipcRenderer.on(channel, (_event: any, ...args: any) => func(...args))
+});

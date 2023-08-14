@@ -6,7 +6,7 @@ const ProjectItem = ({ project, onClick, isActive }: IProjectItemProps) => {
   return (
     <div
       className={combineClassNames('list-item', isActive ? 'active' : '')}
-      onClick={onClick}
+      onClick={() => onClick(project.id)}
     >
       <span className='list-item-icon'>
         <FcFolder />

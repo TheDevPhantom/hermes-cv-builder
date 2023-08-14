@@ -4,6 +4,7 @@ import { IProject } from '../../../../interfaces/Project';
 import { IProjectEditorProps } from './ProjectEditor.types';
 import './_styles.project-editor.scss';
 import useStore from '../../../../store/store';
+import Select from '../../../../components/Select/Select';
 
 const ProjectEditor = ({ project, onSave }: IProjectEditorProps) => {
   const [projectDetails, setProjectDetails] = useState<IProject>(project);
@@ -21,6 +22,10 @@ const ProjectEditor = ({ project, onSave }: IProjectEditorProps) => {
   const handleSave = () => {
     onSave(projectDetails);
   };
+
+  useEffect(() => {
+    handleSave();
+  }, [projectDetails.company]);
 
   return (
     <div className='project-editor' key={project.id}>
@@ -41,7 +46,39 @@ const ProjectEditor = ({ project, onSave }: IProjectEditorProps) => {
             onChange={handleFieldChange}
             onBlur={handleSave}
           />
-        </div>
+          <Select
+            label='Linked Experience'
+            options={[
+              { value: '', label: 'None' },
+              ...experiences.map((experience) => ({
+                label: experience.company,
+                value: experience.id
+              }))
+            ]}
+            value={projectDetails.company}
+            onChange={(value) => {
+              setProjectDetails({ ...projectDetails, company: value });
+            }}
+          />
+        </div>{' '}
+        <Input
+          label='Link to Project'
+          placeholder='(Optional)'
+          value={projectDetails.link}
+          name='link'
+          onChange={handleFieldChange}
+          onBlur={handleSave}
+        />
+        <Input
+          label='Overview'
+          placeholder='Write an overview of the project here...'
+          value={projectDetails.description}
+          type='textarea'
+          name='description'
+          rows={5}
+          onChange={handleFieldChange}
+          onBlur={handleSave}
+        />
       </section>
     </div>
   );

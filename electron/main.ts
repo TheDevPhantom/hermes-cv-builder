@@ -1,5 +1,6 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'node:path';
+import { generatePDF } from './pdfGenerator';
 
 // The built directory structure
 //
@@ -23,7 +24,8 @@ function createWindow() {
   win = new BrowserWindow({
     icon: path.join(process.env.PUBLIC, 'hermes-icon.png'),
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, 'preload.js'),
+      spellcheck: true
     },
     titleBarStyle: 'hidden',
     transparent: true,
@@ -35,6 +37,8 @@ function createWindow() {
     width: 1200,
     height: 800
   });
+
+  win.webContents.session.setSpellCheckerLanguages(['en-UK', 'fr']);
 
   // Test active push message to Renderer-process.
   win.webContents.on('did-finish-load', () => {
@@ -48,6 +52,11 @@ function createWindow() {
     win.loadFile(path.join(process.env.DIST, 'index.html'));
   }
 }
+
+ipcMain.on('generate-pdf', (event, data) => {
+  const outputPath = 'output.pdf'; // Specify the desired output path
+  generatePDF(data, outputPath);
+});
 
 app.on('window-all-closed', () => {
   win = null;

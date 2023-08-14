@@ -1,6 +1,10 @@
 @import '../../styles/variables';
 
 .input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
   label {
     font-weight: 600;
     font-size: 0.8rem;

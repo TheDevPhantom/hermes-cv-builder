@@ -4,4 +4,5 @@ export interface IProfileDetails {
   email: string;
   contactNumber: string;
   bio: string;
+  title: string;
 }

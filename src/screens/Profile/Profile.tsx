@@ -12,6 +12,13 @@ const Profile = () => {
 
   return (
     <div className='profile-screen'>
+      <Input
+        label='Title'
+        placeholder='Developer'
+        name='title'
+        onChange={onChange}
+        value={profileDetails.title}
+      />
       <div className='form-row'>
         <Input
           label='First Name'

@@ -9,9 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@radix-ui/react-select": "^1.2.2",
     "@types/react-beautiful-dnd": "^13.1.4",
     "electron-store": "^8.1.0",
     "moment": "^2.29.4",
+    "pdfkit": "^0.13.0",
     "react": "^18.2.0",
     "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.2.0",
@@ -21,6 +23,7 @@
     "zustand": "^4.4.1"
   },
   "devDependencies": {
+    "@types/pdfkit": "^0.12.10",
     "@types/react": "^18.0.37",
     "@types/react-dom": "^18.0.11",
     "@types/uuid": "^9.0.2",

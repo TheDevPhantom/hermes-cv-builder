@@ -7,9 +7,10 @@ import { useState } from 'react';
 import ProjectItem from './components/ProjectItem/ProjectItem';
 import ProjectEditor from './components/ProjectEditor/ProjectEditor';
 import { IProject } from '../../interfaces/Project';
+import GroupedProjects from './components/GroupedProjects/GroupedProjects';
 
 const Projects = () => {
-  const { projects, updateProjects } = useStore();
+  const { projects, updateProjects, experiences } = useStore();
 
   const [activeProjectIndex, setActiveProjectIndex] = useState(-1);
 
@@ -40,6 +41,18 @@ const Projects = () => {
     updateProjects(newProjects);
   };
 
+  const groupByCompany = (projects: IProject[]) => {
+    const groupedProjects: { [key: string]: IProject[] } = {};
+    projects.forEach((project) => {
+      if (!groupedProjects[project.company]) {
+        groupedProjects[project.company] = [];
+      }
+      groupedProjects[project.company].push(project);
+    });
+
+    return groupedProjects;
+  };
+
   return (
     <div className='projects-screen'>
       <ItemList icon={<FcOpenedFolder />} title='Projects'>
@@ -52,13 +65,20 @@ const Projects = () => {
             <p className='list-item-subtitle'>Add a new project</p>
           </div>
         </div>
-        {projects.map((experience, index) => (
-          <ProjectItem
-            onClick={() => setActiveProjectIndex(index)}
-            isActive={index === activeProjectIndex}
-            project={experience}
-            key={experience.id}
-          />
+        {Object.keys(groupByCompany(projects)).map((experience) => (
+          <>
+            <GroupedProjects
+              key={experience}
+              title={experiences.find((exp) => exp.id === experience)?.company}
+              projects={groupByCompany(projects)[experience]}
+              onProjectClick={(id) =>
+                setActiveProjectIndex(
+                  projects.findIndex((project) => project.id === id)
+                )
+              }
+              activeProjectId={projects[activeProjectIndex]?.id}
+            />
+          </>
         ))}
       </ItemList>
       {activeProjectIndex > -1 && (

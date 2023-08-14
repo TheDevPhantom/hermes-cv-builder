@@ -36,6 +36,14 @@ const Experience = () => {
     updateExperiences(newExperiences);
   };
 
+  const handleDelete = (experience: IExperience) => {
+    const newExperiences = experiences.filter(
+      (item) => item.id !== experience.id
+    );
+    updateExperiences(newExperiences);
+    setActiveExperienceIndex(-1);
+  };
+
   return (
     <div className='experience-screen'>
       <ItemList icon={<FcBriefcase />} title='Experiences'>
@@ -61,6 +69,7 @@ const Experience = () => {
         <ExperienceEditor
           experience={experiences[activeExperienceIndex]}
           onSave={handleSave}
+          onDelete={handleDelete}
         />
       )}
     </div>

@@ -3,10 +3,19 @@ import Input from '../../../../components/Input/Input';
 import { IExperienceEditorProps } from './ExperienceEditor.types';
 import './_styles.experience-editor.scss';
 import { IExperience } from '../../../../interfaces/Experience';
+import useStore from '../../../../store/store';
+import { maxCharacters } from '../../../../utils/stringUtils';
 
-const ExperienceEditor = ({ experience, onSave }: IExperienceEditorProps) => {
+const ExperienceEditor = ({
+  experience,
+  onSave,
+  onDelete
+}: IExperienceEditorProps) => {
   const [experienceDetails, setExperienceDetails] =
     useState<IExperience>(experience);
+  const projects = useStore((state) =>
+    state.projects.filter((project) => project.company === experience.id)
+  );
 
   useEffect(() => {
     setExperienceDetails(experience);
@@ -19,6 +28,10 @@ const ExperienceEditor = ({ experience, onSave }: IExperienceEditorProps) => {
 
   const handleSave = () => {
     onSave(experienceDetails);
+  };
+
+  const handleDelete = async () => {
+    onDelete(experienceDetails);
   };
 
   return (
@@ -92,10 +105,20 @@ const ExperienceEditor = ({ experience, onSave }: IExperienceEditorProps) => {
         <div className='section-header'>
           <h3>Projects</h3>
           <p>
-            Add projects that you have worked on during your time at this
-            company.
+            Projects that you have worked on during your time at this company.
           </p>
         </div>
+        {projects.map((project) => (
+          <div className='project-card'>
+            <div className='project-card-header'>
+              <h4>{project.name}</h4>
+              <p>{experienceDetails.company}</p>
+            </div>
+            <div className='project-card-body'>
+              <p>{maxCharacters(project.description, 150)}</p>
+            </div>
+          </div>
+        ))}
       </section>
       <section>
         <div className='section-header'>
@@ -106,6 +129,9 @@ const ExperienceEditor = ({ experience, onSave }: IExperienceEditorProps) => {
           </p>
         </div>
       </section>
+      <div className='delete' onClick={handleDelete}>
+        Delete
+      </div>
     </div>
   );
 };

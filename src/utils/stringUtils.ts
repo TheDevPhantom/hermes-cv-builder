@@ -10,3 +10,7 @@ export const checkEmpty = (
 ): string | React.ReactElement => {
   return !value ? returnValue : value;
 };
+
+export const maxCharacters = (value: string, max: number): string => {
+  return value.length > max ? `${value.slice(0, max)}...` : value;
+};
