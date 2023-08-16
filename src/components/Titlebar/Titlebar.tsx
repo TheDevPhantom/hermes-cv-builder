@@ -18,7 +18,7 @@ const Titlebar = () => {
       <p>Adriaan Botha CV</p>
       <button onClick={onGenerate}>
         <FiShare2 />
-        Share
+        Generate
       </button>
     </div>
   );
