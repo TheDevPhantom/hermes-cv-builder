@@ -1,0 +1,49 @@
+@import '../../styles/variables.scss';
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: $padding;
+  align-items: center;
+  padding: 0.25rem;
+
+  .tab {
+    background-color: $color-foreground;
+    border-radius: 50%;
+    border: $border;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease-in-out;
+
+    .icon {
+      font-size: 1.2rem;
+      transition: all 0.2s ease-in-out;
+      display: flex;
+    }
+
+    &:hover {
+      background-color: $color-raised;
+      cursor: pointer;
+    }
+
+    &:active {
+      background-color: $color-indented;
+
+      .icon {
+        font-size: 1rem;
+      }
+    }
+
+    &.active {
+      background-color: $color-raised;
+      box-shadow: 0 0 1rem #00000020;
+
+      .icon {
+        font-size: 1.6rem;
+      }
+    }
+  }
+}

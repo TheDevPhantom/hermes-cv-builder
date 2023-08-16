@@ -1,0 +1,33 @@
+@import '../../styles/variables';
+
+.item-list {
+  display: flex;
+  flex-direction: column;
+  gap: $padding;
+  background-color: $color-indented;
+  padding: $padding;
+  border: $border;
+  border-radius: $border-radius;
+  overflow: auto;
+
+  .item-list-header {
+    display: flex;
+    align-items: center;
+    gap: calc($padding / 2);
+
+    span {
+      background-color: $color-foreground;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    p {
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+  }
+}

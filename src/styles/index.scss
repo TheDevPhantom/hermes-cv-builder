@@ -1,0 +1,58 @@
+@import 'variables.scss';
+@import 'animations.scss';
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: $color-background;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  border-radius: $border-radius;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+  }
+}
+
+.body {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  padding: 0.5rem;
+  padding-top: $header-height;
+
+  .content {
+    flex: 1;
+    margin-left: 0.5rem;
+    overflow: hidden;
+    display: flex;
+    max-height: 100%;
+  }
+}

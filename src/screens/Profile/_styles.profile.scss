@@ -1,0 +1,15 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.profile-screen {
+  @include screen;
+
+  padding: $padding;
+  display: flex;
+  flex-direction: column;
+  gap: $padding;
+  flex: 1;
+  background-color: $color-foreground;
+  border: $border;
+  border-radius: $border-radius;
+}

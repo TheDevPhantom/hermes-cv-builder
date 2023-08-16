@@ -1,0 +1,29 @@
+@import '../../../../styles/variables';
+
+.grouped-projects {
+  display: flex;
+  flex-direction: column;
+  gap: calc($padding / 2);
+
+  .title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: $border;
+    padding: 4px;
+    margin-bottom: 4px;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $color-foreground;
+      border-radius: 4px;
+    }
+
+    > p {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+  }
+}

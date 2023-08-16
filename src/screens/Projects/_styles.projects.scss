@@ -1,0 +1,11 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.projects-screen {
+  @include screen;
+
+  flex: 1;
+  display: grid;
+  grid-template-columns: 300px auto;
+  gap: $padding;
+}
