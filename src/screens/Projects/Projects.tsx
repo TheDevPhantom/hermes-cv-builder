@@ -53,6 +53,12 @@ const Projects = () => {
     return groupedProjects;
   };
 
+  const handleDelete = (project: IProject) => {
+    const newProjects = projects.filter((item) => item.id !== project.id);
+    updateProjects(newProjects);
+    setActiveProjectIndex(-1);
+  };
+
   return (
     <div className='projects-screen'>
       <ItemList icon={<FcOpenedFolder />} title='Projects'>
@@ -85,6 +91,7 @@ const Projects = () => {
         <ProjectEditor
           project={projects[activeProjectIndex]}
           onSave={handleSave}
+          onDelete={handleDelete}
         />
       )}
     </div>

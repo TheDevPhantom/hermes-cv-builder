@@ -4,9 +4,10 @@ export interface IProject {
   description: string;
   startDate: string;
   endDate: string;
-  technologies: string[];
+  technologies: string;
   role: string;
   link: string;
   responsibilities: string[];
   company: string;
+  includeInPdf: boolean;
 }

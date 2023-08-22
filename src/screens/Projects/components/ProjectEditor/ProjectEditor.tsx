@@ -6,7 +6,7 @@ import './_styles.project-editor.scss';
 import useStore from '../../../../store/store';
 import Select from '../../../../components/Select/Select';
 
-const ProjectEditor = ({ project, onSave }: IProjectEditorProps) => {
+const ProjectEditor = ({ project, onSave, onDelete }: IProjectEditorProps) => {
   const [projectDetails, setProjectDetails] = useState<IProject>(project);
   const { experiences } = useStore();
 
@@ -27,6 +27,10 @@ const ProjectEditor = ({ project, onSave }: IProjectEditorProps) => {
     handleSave();
   }, [projectDetails.company]);
 
+  const handleDelete = async () => {
+    onDelete(projectDetails);
+  };
+
   return (
     <div className='project-editor' key={project.id}>
       <section>
@@ -36,6 +40,22 @@ const ProjectEditor = ({ project, onSave }: IProjectEditorProps) => {
             Fill in the information below to describe your professional
             experience.
           </p>
+        </div>
+        <div className='include-in-project'>
+          <input
+            type='checkbox'
+            id='includeInPdf'
+            name='includeInPdf'
+            checked={projectDetails.includeInPdf ?? false}
+            onChange={(e) => {
+              setProjectDetails({
+                ...projectDetails,
+                includeInPdf: e.target.checked
+              });
+              onSave({ ...projectDetails, includeInPdf: e.target.checked });
+            }}
+          />
+          <label htmlFor='includeInPdf'>Include in PDF</label>
         </div>
         <div className='form-row'>
           <Input
@@ -60,7 +80,35 @@ const ProjectEditor = ({ project, onSave }: IProjectEditorProps) => {
               setProjectDetails({ ...projectDetails, company: value });
             }}
           />
-        </div>{' '}
+        </div>
+        <div className='form-row'>
+          <div className='form-row'>
+            <Input
+              label='Start Date'
+              value={projectDetails.startDate}
+              type='date'
+              name='startDate'
+              onChange={handleFieldChange}
+              onBlur={handleSave}
+            />
+            <Input
+              label='End Date'
+              value={projectDetails.endDate}
+              type='date'
+              name='endDate'
+              onChange={handleFieldChange}
+              onBlur={handleSave}
+            />
+          </div>
+          <Input
+            label='Role'
+            placeholder='Lead Developer'
+            value={projectDetails.role}
+            name='role'
+            onChange={handleFieldChange}
+            onBlur={handleSave}
+          />
+        </div>
         <Input
           label='Link to Project'
           placeholder='(Optional)'
@@ -79,7 +127,18 @@ const ProjectEditor = ({ project, onSave }: IProjectEditorProps) => {
           onChange={handleFieldChange}
           onBlur={handleSave}
         />
+        <Input
+          label='Skills/Technologies Used'
+          placeholder='React, Node.js, etc.'
+          value={projectDetails.technologies}
+          name='technologies'
+          onChange={handleFieldChange}
+          onBlur={handleSave}
+        />
       </section>
+      <div className='delete' onClick={handleDelete}>
+        Delete
+      </div>
     </div>
   );
 };

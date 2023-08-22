@@ -60,6 +60,29 @@ const Profile = () => {
         value={profileDetails.bio}
         rows={10}
       />
+      <div className='form-row'>
+        <Input
+          label='LinkedIn'
+          placeholder='https://www.linkedin.com/in/johndoe'
+          name='linkedin'
+          onChange={onChange}
+          value={profileDetails.linkedin}
+        />
+        <Input
+          label='GitHub'
+          placeholder='https://github.com/johndoe'
+          name='github'
+          onChange={onChange}
+          value={profileDetails.github}
+        />
+        <Input
+          label='Dribbble'
+          placeholder='https://dribbble.com/johndoe'
+          name='dribbble'
+          onChange={onChange}
+          value={profileDetails.dribbble}
+        />
+      </div>
     </div>
   );
 };

@@ -5,4 +5,7 @@ export interface IProfileDetails {
   contactNumber: string;
   bio: string;
   title: string;
+  github: string;
+  linkedin: string;
+  dribbble: string;
 }

@@ -38,11 +38,6 @@ export default [
     icon: <FcOpenedFolder />,
     title: 'Projects',
     screen: <Projects />
-  },
-  {
-    icon: <FcIdea />,
-    title: 'Skills',
-    screen: <Skills />
   }
   //   {
   //     icon: <FcFaq />,

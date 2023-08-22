@@ -5,6 +5,8 @@ import moment from 'moment';
 import { IExperience } from '../src/interfaces/Experience';
 import { IProject } from '../src/interfaces/Project';
 import { IProfileDetails } from '../src/interfaces/Profile';
+import SVGtoPDF from 'svg-to-pdfkit';
+import { dribbble, github, linkedin } from './svgs';
 
 const fontPath = __dirname + '/fonts/';
 
@@ -31,6 +33,9 @@ const pdf = {
     black: '#000'
   }
 };
+
+const xPosition = pdf.margin; // Adjust this to your desired x position
+const lineStartX = xPosition + 125; // Adjust this based on your layout
 
 interface IGenerateData {
   experiences: IExperience[];
@@ -80,19 +85,35 @@ export function generatePDF(data: IGenerateData, outputPath: string): void {
 
   drawFullLine(doc);
 
-  const xPosition = pdf.margin; // Adjust this to your desired x position
-  const lineStartX = xPosition + 125; // Adjust this based on your layout
+  doc
+    .fontSize(pdf.fontSize.text)
+    .font(pdf.fonts.medium)
+    .text('Phone', lineStartX)
+    .font(pdf.fonts.light)
+    .text(data.profileDetails.contactNumber, lineStartX, undefined, {
+      align: 'justify'
+    })
+    .moveUp(2)
+    .fontSize(pdf.fontSize.text)
+    .font(pdf.fonts.medium)
+    .text('Email', lineStartX + 200)
+    .font(pdf.fonts.light)
+    .text(data.profileDetails.email, lineStartX + 200, undefined, {
+      align: 'justify'
+    })
+    .moveDown(1);
 
   doc
     .fontSize(pdf.fontSize.text)
     .font(pdf.fonts.medium)
-    .text('Bio')
-    .moveUp(1)
+    .text('About', lineStartX)
     .font(pdf.fonts.light)
     .text(data.profileDetails.bio, lineStartX, undefined, {
       align: 'justify'
     })
     .moveDown(2);
+
+  addSocials(doc, data.profileDetails);
 
   addSectionHeader(doc, 'Work Experience');
 
@@ -137,7 +158,31 @@ export function generatePDF(data: IGenerateData, outputPath: string): void {
 
   doc.moveDown(2);
 
-  addSectionHeader(doc, 'Education & Qualifications');
+  // addSectionHeader(doc, 'Education & Qualifications');
+  addSectionHeader(doc, 'Noteworthy Projects');
+
+  let projectIndex = 0;
+
+  data.projects
+    .sort((a, b) => {
+      if (a.startDate > b.startDate) {
+        return -1;
+      }
+      if (a.startDate < b.startDate) {
+        return 1;
+      }
+      return 0;
+    })
+    .filter((project: any) => project.includeInPdf)
+    .forEach((project: IProject) => {
+      addProject(doc, project, data.experiences);
+
+      if (projectIndex !== data.projects.length - 1) {
+        drawLine(doc);
+      }
+
+      projectIndex++;
+    });
 
   doc.end();
 }
@@ -197,7 +242,72 @@ const addSectionHeader = (doc: PDFKit.PDFDocument, text: string) => {
     .fillColor(pdf.colours.black);
 };
 
+const addSocials = (
+  doc: PDFKit.PDFDocument,
+  profileDetails: IProfileDetails
+) => {
+  const socialLine = doc.y;
+
+  const socialGap = 175;
+
+  SVGtoPDF(doc, linkedin, lineStartX, socialLine, {
+    width: 20,
+    height: 20
+  });
+
+  doc
+    .fontSize(pdf.fontSize.text)
+    .font(pdf.fonts.medium)
+    .text('LinkedIn', lineStartX + 25, socialLine + 4)
+    .link(lineStartX, socialLine, socialGap / 2, 20, profileDetails.linkedin);
+
+  SVGtoPDF(doc, github, lineStartX + socialGap, socialLine, {
+    width: 20,
+    height: 20
+  });
+
+  doc
+    .fontSize(pdf.fontSize.text)
+    .font(pdf.fonts.medium)
+    .text('GitHub', lineStartX + 25 + socialGap, socialLine + 4)
+    .link(
+      lineStartX + socialGap,
+      socialLine,
+      socialGap / 2,
+      20,
+      profileDetails.github
+    );
+
+  SVGtoPDF(doc, dribbble, lineStartX + socialGap + socialGap, socialLine, {
+    width: 20,
+    height: 20
+  });
+
+  doc
+    .fontSize(pdf.fontSize.text)
+    .font(pdf.fonts.medium)
+    .text('Dribbble', lineStartX + 25 + socialGap + socialGap, socialLine + 4)
+    .link(
+      lineStartX + socialGap + socialGap,
+      socialLine,
+      socialGap / 2,
+      20,
+      profileDetails.dribbble
+    );
+
+  doc.moveDown(2);
+};
+
 const addExperience = (doc: PDFKit.PDFDocument, experience: IExperience) => {
+  var height = doc.heightOfString(experience.overview, {
+    width: 300,
+    align: 'justify'
+  });
+
+  if (doc.y + height > doc.page.height - pdf.margin) {
+    pageBreak(doc, 'Work Experience (Continued)');
+  }
+
   doc
     .font(pdf.fonts.bold)
     .fontSize(pdf.fontSize.text)
@@ -229,6 +339,71 @@ const addExperience = (doc: PDFKit.PDFDocument, experience: IExperience) => {
     .moveDown(1);
 };
 
+const addProject = (
+  doc: PDFKit.PDFDocument,
+  project: IProject,
+  experiences: IExperience[]
+) => {
+  var height = doc.heightOfString(project.description, {
+    width: 300,
+    align: 'justify'
+  });
+
+  if (doc.y + height + 100 > doc.page.height - pdf.margin) {
+    pageBreak(doc, 'Noteworthy Projects (Continued)');
+  }
+
+  doc
+    .font(pdf.fonts.bold)
+    .fontSize(pdf.fontSize.text)
+    .font(pdf.fonts.medium)
+    .text(
+      `${moment(project.startDate).format('MMM YYYY')} - ${
+        project.endDate ? moment(project.endDate).format('MMM YYYY') : 'Present'
+      }`,
+      pdf.content.x
+    )
+    .fontSize(pdf.fontSize.small)
+    .fillColor(pdf.colours.blue)
+    .moveDown(1)
+    .text(
+      experiences.find((exp) => exp.id === project.company)?.company ??
+        'Freelance',
+      pdf.content.x
+    )
+    .fillColor('#000')
+    .text(project.role, pdf.content.x)
+    .moveUp(4.25)
+    .font(pdf.fonts.bold)
+    .fontSize(pdf.fontSize.text)
+    .text(project.name, pdf.content.x + 150);
+
+  if (project.link) {
+    doc
+      .link(pdf.content.x + 150, doc.y, 300, 16, project.link)
+      .font(pdf.fonts.medium)
+      .fontSize(pdf.fontSize.small)
+      .fillColor(pdf.colours.blue)
+      .text('Link To Project', pdf.content.x + 150)
+      .fillColor('#000');
+  }
+
+  doc
+    .moveDown(1)
+    .font(pdf.fonts.regular)
+    .fontSize(pdf.fontSize.text)
+    .text(project.description, pdf.content.x + 150, undefined, {
+      align: 'justify'
+    })
+    .moveDown(1)
+    .fontSize(pdf.fontSize.small)
+    .font(pdf.fonts.bold)
+    // .opacity(0.8)
+    .text(project.technologies, pdf.content.x + 150)
+    .opacity(1)
+    .moveDown(1);
+};
+
 const splitTextAtFirstSpace = (text: string) => {
   const firstSpaceIndex = text.indexOf(' ');
 
@@ -239,4 +414,22 @@ const splitTextAtFirstSpace = (text: string) => {
   } else {
     return [text];
   }
+};
+
+const addBackground = (doc: PDFKit.PDFDocument) => {
+  doc.rect(0, 0, doc.page.width, doc.page.height).fill('#F7FAFF');
+  doc.fill('#000');
+};
+
+const pageBreak = (doc: PDFKit.PDFDocument, text: string) => {
+  doc.addPage();
+  addBackground(doc);
+
+  doc
+    .fontSize(pdf.fontSize.small)
+    .font(pdf.fonts.bold)
+    .opacity(0.3)
+    .text(text)
+    .opacity(1)
+    .moveDown(2);
 };

@@ -120,15 +120,6 @@ const ExperienceEditor = ({
           </div>
         ))}
       </section>
-      <section>
-        <div className='section-header'>
-          <h3>Skills</h3>
-          <p>
-            Add skills that you have gained and/or improved during your time at
-            this company.
-          </p>
-        </div>
-      </section>
       <div className='delete' onClick={handleDelete}>
         Delete
       </div>
